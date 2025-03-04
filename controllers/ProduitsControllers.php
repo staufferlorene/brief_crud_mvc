@@ -15,11 +15,10 @@ class ProduitsController {
      *@param int $id id du produit
      */
 
+    // Afficher les produits
     public function details() {
-/*    public function details(int $id_produits) {*/
         // Chargement du produit
         $produit = Produit::lister();
-     /*   $produit = Produit::lister($id_produits);*/
 
         if (!$produit){
             echo "Produit non trouvée";
@@ -29,6 +28,44 @@ class ProduitsController {
         // Inclusion de la vue
         include __DIR__ . '/../views/produitDetail.php';
     }
+
+    // Ajouter un produit
+    public function add() {
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $nom = isset($_POST['nom']) ? trim($_POST['nom']) : '';
+            $prix = isset($_POST['prix']) ? trim($_POST['prix']) : '';
+            $stock = isset($_POST['stock']) ? trim($_POST['stock']) : '';
+
+            // Ajout du produit
+            $produit = Produit::ajouter($nom, $prix, $stock);}
+
+        // Redirection puis quitte
+        header("Location: index.php");
+        exit();
+
+      // Inclusion de la vue
+      include __DIR__ . '/../views/produitDetail.php';
+    }
+
+
+
+  /*  // Modifier un produit
+    public function update() {
+        // Chargement du produit
+        $produit = Produit::modifier();
+
+        if (!$produit){
+            echo "Produit non trouvée";
+            return;
+        }
+
+        // Inclusion de la vue
+        include __DIR__ . '/../views/produitDetail.php';
+    }*/
+
 
     // A FAIRE function
 

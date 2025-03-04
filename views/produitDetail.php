@@ -1,23 +1,4 @@
-<!--<h2> Details du produit </h2>
-<?php /*if (!isset($produit)){
-    echo "<p>Erreur : Voiture non trouvée</p>";
-    exit;
-}
-*/?>
-<p><?php /*echo htmlspecialchars($produit->getDetails());*/?></p>
-<?php
-/*// S'il y a un message on l'affiche
-if(isset($message)){
-    echo "<p style='color: green;'>". htmlspecialchars($message) . "</p>";
-}
-*/?>
 
-<p>
-    <a href="index.php?action=repair&id=<?php /*=$voiture->getId()*/?>">Réparer cette voiture</a>
-    <a href="index.php?action=constat&id=<?php /*=$voiture->getId()*/?>">Constater la panne de cette voiture</a>
-</p>
-
--->
 
 <!doctype html>
 <html lang="fr">
@@ -55,7 +36,7 @@ if(isset($message)){
     </tbody>
 </table>
 <h2>Ajouter un produit</h2>
-<form action="index.php" method="post">
+<form action="index.php?action=add" method="post">
     <label for="name">Nom :</label>
     <input type="text" id="name" name="nom" required>
 

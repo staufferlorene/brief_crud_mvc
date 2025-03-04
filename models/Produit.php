@@ -62,8 +62,25 @@ class Produit {
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-      /*  if ($data){
-            /*return new Produit($data['nom'], $data['prix'], $data['stock'], $data['id_produits']);*/
-
     }
+
+    // Ajout d'un produit dans la BDD
+    public static function ajouter ($nom, $prix, $stock) {
+        // On récupère PDO via la Class Database
+        $db = Database::getInstance()->getConnection();
+        // Ajout
+        $stmt = $db->prepare("INSERT INTO produits (nom, prix, stock) VALUES (?, ?, ?)");
+        $stmt->execute([$nom, $prix, $stock]);
+    }
+
+    // Modification d'un produit dans la BDD
+    public static function modifier ($nom, $prix, $stock, $id_produits) {
+        // On récupère PDO via la Class Database
+        $db = Database::getInstance()->getConnection();
+        // Màj
+        $stmt = $db->prepare("UPDATE produits SET nom=?, prix=?, stock=? WHERE id_produits=?");
+        $stmt->execute([$nom, $prix, $stock, $id_produits]);
+    }
+
 }
+

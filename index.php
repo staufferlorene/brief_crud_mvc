@@ -38,6 +38,11 @@ switch ($action) {
         $controller->details($id_produits);
         break;
 
+    case 'add':
+        // Appel de la méthode pour afficher les détails de la voiture
+        $controller->add($id_produits);
+        break;
+
 /*    // Appel de la méthode pour réparer la voiture
     case 'repair':
         $controller->repair($id);
