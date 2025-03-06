@@ -5,23 +5,24 @@
 // Ce contrôleur gère les actions qui concernent la voiture
 // Son but est de récupérer les données et d'inclure la vue
 
-require_once __DIR__ . '/../models/Produit.php';
+require_once __DIR__ . '/../models/Database.php';
+require_once __DIR__ . '/../models/Produits.php';
 
 class ProduitsController {
     /**
      * function details
      * Afficher les détails du produit (selon l'id)
      *
-     *@param int $id id du produit
+     *@param int $id_produits id du produit
      */
 
     // Afficher les produits
-    public function details() {
+    public function details(int $id_produits) {
         // Chargement du produit
-        $produit = Produit::lister();
+        $produit = Produits::lister();
 
         if (!$produit){
-            echo "Produit non trouvée";
+            echo "Produits non trouvé";
             return;
         }
 
@@ -32,41 +33,24 @@ class ProduitsController {
     // Ajouter un produit
     public function add() {
 
+        Produits::ajouter($_POST['nom'], $_POST['prix'], $_POST['stock']);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $nom = isset($_POST['nom']) ? trim($_POST['nom']) : '';
-            $prix = isset($_POST['prix']) ? trim($_POST['prix']) : '';
-            $stock = isset($_POST['stock']) ? trim($_POST['stock']) : '';
-
-            // Ajout du produit
-            $produit = Produit::ajouter($nom, $prix, $stock);}
-
-        // Redirection puis quitte
+        // Redirection
         header("Location: index.php");
-        exit();
 
       // Inclusion de la vue
       include __DIR__ . '/../views/produitDetail.php';
     }
 
+    public function delete() {
+        Produits::delete($_GET['id_produits']);
+        header("Location: index.php");
+        exit();
+    }
 
-
-  /*  // Modifier un produit
-    public function update() {
-        // Chargement du produit
-        $produit = Produit::modifier();
-
-        if (!$produit){
-            echo "Produit non trouvée";
-            return;
-        }
-
-        // Inclusion de la vue
-        include __DIR__ . '/../views/produitDetail.php';
-    }*/
-
-
-    // A FAIRE function
-
+    public function modifier($id_produits) {
+        Produits::modifier($_POST['nom'], $_POST['prix'], $_POST['stock'], $id_produits);
+        header("Location: index.php");
+        exit();
+    }
 }

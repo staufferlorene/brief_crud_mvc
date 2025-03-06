@@ -1,8 +1,8 @@
 <?php
 
-require 'Database.php';
+require_once 'Database.php';
 
-class Produit {
+class Produits {
 
     // propriétés privées (encapsulation)
     private $id_produits; // id unique de la BDD
@@ -44,6 +44,22 @@ class Produit {
         return "Produit : " .$this->id_produits . $this->nom . " " . $this->prix . " " . $this->stock;
     }
 
+    public function setNom($nom) {
+        $this->nom = $nom;
+    }
+
+    public function setPrix($prix) {
+        $this->prix = $prix;
+    }
+
+    public function setStock($stock) {
+        $this->stock = $stock;
+    }
+
+    public function showDetails() {
+        echo "Produit : " .$this->id_produits . $this->nom . " " . $this->prix . " " . $this->stock;
+    }
+
      //Méthode pour charger les produits provenant de la BDD
     /**
      * Charger un produit depuis la BDD via son ID
@@ -82,5 +98,45 @@ class Produit {
         $stmt->execute([$nom, $prix, $stock, $id_produits]);
     }
 
-}
+    public static function delete($id_produits) {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("DELETE FROM produits WHERE id_produits = ?");
+        return $stmt->execute([$id_produits]);
+    }
 
+    public function save()
+    {
+        $db = Database::getInstance()->getConnection();
+
+        if ($this->id_produits === null) {
+            //insertion
+            $stmt = $db->prepare("INSERT INTO produits(nom, prix, stock) VALUE(?,?,?)");
+            $stmt->execute([$this->nom, $this->prix, $this->stock]);
+
+            //Recuperation de l'id généré par MySQL
+            $this->id_produits = $db->lastInsertId();
+        } else {
+            //Mise à jour si la voiture existe déjà
+            $stmt = $db->prepare("UPDATE produits SET nom =?, prix =?, stock=? WHERE id_produits = ?");
+            $stmt->execute([$this->nom, $this->prix, $this->stock, $this->id_produits]);
+        }
+    }
+
+    public static function loadById(int $id_produits) {
+        // On récupère PDO via la Class Database
+        $db = Database::getInstance()->getConnection();
+
+        // Récupération des infos dans la BDD
+        $stmt = $db->prepare("SELECT * FROM produits WHERE id_produits = ?");
+        $stmt->execute([$id_produits]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($data) {
+            return new Produits($data['nom'], $data['prix'], $data['stock'], $data['id_produits']);
+        }
+
+        //Sinon on retourne null
+        return null;
+    }
+}

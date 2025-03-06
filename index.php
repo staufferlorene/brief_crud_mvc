@@ -10,14 +10,14 @@
 // Démarrage de la session
 session_start();
 
-// Inclusion des contrôleurs (ici il n'y a que voiture)
+// Inclusion des contrôleurs
 require_once 'controllers/ProduitsControllers.php';
 
 // Récupération des paramètres de l'action via l'URL (ex : index.php?action=details)
 $action = isset($_GET['action']) ? $_GET['action'] : 'details';
 
 // Même chose avec l'id
-$id_produits = isset($_GET['id_produits']) ? intval($_GET['id_produits']) : 1;
+$id_produits = isset($_GET['id_produits']) ? intval($_GET['id_produits']) : 0;
 
 // Instanciation du contrôleur
 $controller = new ProduitsController();
@@ -34,24 +34,24 @@ $controller = new ProduitsController();
 // if et else du dessus écrit avec un switch
 switch ($action) {
     case 'details':
-        // Appel de la méthode pour afficher les détails de la voiture
+        // Appel de la méthode pour afficher les détails du produit
         $controller->details($id_produits);
         break;
 
     case 'add':
-        // Appel de la méthode pour afficher les détails de la voiture
-        $controller->add($id_produits);
+        // Appel de la méthode pour ajouter un produit
+        $controller->add();
         break;
 
-/*    // Appel de la méthode pour réparer la voiture
-    case 'repair':
-        $controller->repair($id);
+    case "modifier" :
+        // Appel de la méthode pour modifier les détails du produit
+        $controller->modifier($id_produits);
         break;
 
-    // Appel de la méthode pour constater la panne de la voiture
-    case 'constat':
-        $controller->constat($id);
-        break;*/
+    // Appel de la méthode pour supprimer un produit
+    case "delete" :
+        $controller->delete();
+        break;
 
     //Après avoir fini tous les cas on fait un default
     default:

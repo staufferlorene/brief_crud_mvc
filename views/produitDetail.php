@@ -1,5 +1,4 @@
-
-
+<?php if (!empty($produit)):  ?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -7,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gestion des produits (POO)</title>
+    <title>Gestion des produits</title>
 </head>
 <body>
 <h1>Liste des produits</h1>
@@ -29,24 +28,17 @@
             <td><?= htmlspecialchars($a['nom']) ?></td>
             <td><?= htmlspecialchars($a['prix']) ?></td>
             <td><?= htmlspecialchars($a['stock']) ?></td>
-            <td><button><a href="update.php?id=<?= $a['id_produits']; ?>">Modifier</a></button></td>
-            <td><button><a href="delete.php?id=<?= $a['id_produits']; ?>">Supprimer</a></button></td>
+            <td><button><a href="/views/edit.php?id_produits=<?=$a['id_produits'];?>">Modifier</a></button></td>
+            <td><button><a href="index.php?action=delete&id_produits=<?=$a['id_produits'];?>">Supprimer</a></button></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
-</table>
-<h2>Ajouter un produit</h2>
-<form action="index.php?action=add" method="post">
-    <label for="name">Nom :</label>
-    <input type="text" id="name" name="nom" required>
+    </table>
+        <button><a href="../views/add.php">Ajouter un nouveau produit</a></button>
 
-    <label for="prix">Prix :</label>
-    <input type="text" id="prix" name="prix" required>
+    <?php else: ?>
+    <p>Aucun Produit</p>
+    <?php endif; ?>
 
-    <label for="stock">Stock :</label>
-    <input type="text" id="stock" name="stock" required>
-    <button type="submit">Valider</button>
-</form>
-
-</body>
+    </body>
 </html>
