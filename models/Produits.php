@@ -130,7 +130,7 @@ class Produits {
         $stmt = $db->prepare("SELECT * FROM produits WHERE id_produits = ?");
         $stmt->execute([$id_produits]);
 
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+       $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($data) {
             return new Produits($data['nom'], $data['prix'], $data['stock'], $data['id_produits']);

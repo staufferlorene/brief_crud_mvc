@@ -26,7 +26,7 @@ $produits = Produits::loadById($id_produits);
 </head>
 <body>
 <h1>Modifier un produit</h1>
-<form action="../../brief_crud_mvc/index.php?action=modifier&id=<?= $id_produits ?>" method="post">
+<form action="../../brief_crud_mvc/index.php?action=modifier&id_produits=<?= $id_produits ?>" method="post">
 
     <label for="name">Nom :</label>
     <input type="text" id="name" name="nom" required value="<?= htmlspecialchars($produits->getNom() ?? '') ?>">
